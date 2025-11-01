@@ -1,0 +1,44 @@
+### Arquivos e pastas geradas ###
+target/
+build/
+out/
+
+### Arquivos de ajuda ###
+HELP.md
+
+### Maven ###
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+*.iws
+*.ipr
+
+### Spring Tool Suite (STS) ###
+.apt_generated/
+.factorypath/
+.project
+.settings/
+.springBeans/
+.sts4-cache/
+
+### VS Code ###
+.vscode/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### Logs e caches ###
+*.log
+*.tmp
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
