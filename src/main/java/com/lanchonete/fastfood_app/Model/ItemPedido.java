@@ -11,7 +11,7 @@ public class ItemPedido {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-
+    //Relacionamento
     @ManyToOne
     @JoinColumn(name = "pedido_id", nullable = false)
     private Pedido pedido;

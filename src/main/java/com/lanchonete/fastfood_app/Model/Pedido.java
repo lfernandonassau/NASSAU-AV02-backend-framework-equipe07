@@ -28,7 +28,7 @@ public class Pedido {
     @Column(nullable = false)
     private Double taxaEntrega;
 
-
+    //Relacionamento
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;

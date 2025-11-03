@@ -24,7 +24,7 @@ public class NotaFiscal {
     @Column(nullable = false)
     private Double impostos;
 
-
+    //Relacionameto
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pedido_id", nullable = false, unique = true)
     private Pedido pedido;
