@@ -1,6 +1,6 @@
-package com.lanchonete.fastfood_app.Repository;
+package com.lanchonete.fastfood_app.repository;
 
-import com.lanchonete.fastfood_app.Model.ItemPedido;
+import com.lanchonete.fastfood_app.model.ItemPedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

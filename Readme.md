@@ -61,7 +61,8 @@ src/
 - 🛒 **Pedido** — id, data, valorTotal, status, taxaEntrega (fixa), usuarioId, entregadorId (sempre setado para um entregador disponível).
 - 📦 **ItemPedido** — id, pedidoId, produtoId, quantidade, precoUnitario (copiado do produto no momento da compra).
 - 🧾 **NotaFiscal** — id, número, dataEmissao, valorTotal, impostos, pedidoId.
-- 🏍️ **Entregador** — id, nome, telefone, veículo, placa, disponibilidade.
+- 🏍️
+- **Entregador** — id, nome, telefone, veículo, placa, disponibilidade.
 
 ---
 
@@ -88,24 +89,24 @@ src/
 
 ### Autenticação / Usuário
 ```http
-POST /api/usuarios
+POST /api/usuarios ✅
 POST /api/login
 # Retorna token JWT
 ```
 
 ### Produtos
 ```http
-GET /api/produtos
-GET /api/produtos/{id}
-POST /api/produtos          # ADMIN
-PUT  /api/produtos/{id}     # ADMIN
-DELETE /api/produtos/{id}   # ADMIN
+GET /api/produtos ✅
+GET /api/produtos/{id} ✅
+POST /api/produtos ✅         # ADMIN
+PUT  /api/produtos/{id} ✅    # ADMIN
+DELETE /api/produtos/{id} ✅  # ADMIN
 ```
 
 ### Pedidos
 ```http
-POST /api/pedidos
-GET /api/pedidos
+POST /api/pedidos ✅
+GET /api/pedidos ✅
 PUT /api/pedidos/{id}/status?novoStatus=Em%20preparo
 PUT /api/pedidos/{id}/entregador/{entregadorId}
 PUT /api/pedidos/{id}/entregar
@@ -113,8 +114,8 @@ PUT /api/pedidos/{id}/entregar
 
 ### Entregadores
 ```http
-GET /api/entregadores/disponiveis
-POST /api/entregadores    # ADMIN
+GET /api/entregadores/disponiveis ✅
+POST /api/entregadores ✅   # ADMIN
 PUT  /api/entregadores/{id}
 ```
 

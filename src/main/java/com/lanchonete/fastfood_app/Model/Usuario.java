@@ -1,6 +1,6 @@
-package com.lanchonete.fastfood_app.Model;
+package com.lanchonete.fastfood_app.model;
 
-import com.lanchonete.fastfood_app.Model.enums.TipoUsuario;
+import com.lanchonete.fastfood_app.model.enums.TipoUsuario;
 import jakarta.persistence.*;
 import java.util.UUID;
 
@@ -19,7 +19,7 @@ public class Usuario {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+   @Column(nullable = false)
     private String senha;
 
     @Column(nullable = false)

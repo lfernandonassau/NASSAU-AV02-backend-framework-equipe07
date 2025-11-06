@@ -1,4 +1,4 @@
-package com.lanchonete.fastfood_app.Model;
+package com.lanchonete.fastfood_app.model;
 
 import jakarta.persistence.*;
 import java.util.UUID;
@@ -24,7 +24,7 @@ public class Entregador {
     private String placa;
 
     @Column(nullable = false)
-    private boolean disponibilidade;
+    private boolean disponibilidade = true;
 
     public Entregador() {
     }

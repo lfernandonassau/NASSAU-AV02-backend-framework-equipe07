@@ -1,8 +1,8 @@
-package com.lanchonete.fastfood_app.Model;
+package com.lanchonete.fastfood_app.model;
 
-import com.lanchonete.fastfood_app.Model.enums.StatusPedido;
-import com.lanchonete.fastfood_app.Model.Usuario;
-import com.lanchonete.fastfood_app.Model.Entregador;
+import com.lanchonete.fastfood_app.model.enums.StatusPedido;
+import com.lanchonete.fastfood_app.model.Usuario;
+import com.lanchonete.fastfood_app.model.Entregador;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;

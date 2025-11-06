@@ -1,4 +1,4 @@
-package com.lanchonete.fastfood_app.Model.enums;
+package com.lanchonete.fastfood_app.model.enums;
 
 public enum StatusPedido {
     PENDENTE,

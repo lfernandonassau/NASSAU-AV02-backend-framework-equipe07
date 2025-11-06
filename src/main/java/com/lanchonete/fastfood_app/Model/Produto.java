@@ -1,4 +1,4 @@
-package com.lanchonete.fastfood_app.Model;
+package com.lanchonete.fastfood_app.model;
 
 import jakarta.persistence.*;
 import lombok.Setter;
