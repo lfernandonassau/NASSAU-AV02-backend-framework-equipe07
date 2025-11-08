@@ -3,6 +3,7 @@ package com.lanchonete.fastfood_app.service;
 import com.lanchonete.fastfood_app.model.Produto;
 import com.lanchonete.fastfood_app.model.Usuario;
 import com.lanchonete.fastfood_app.repository.ProdutoRepository;
+import com.lanchonete.fastfood_app.dto.ProdutoDTO;
 import com.lanchonete.fastfood_app.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

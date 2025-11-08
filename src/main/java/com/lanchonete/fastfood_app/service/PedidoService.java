@@ -2,6 +2,8 @@ package com.lanchonete.fastfood_app.service;
 
 import com.lanchonete.fastfood_app.model.Pedido;
 import com.lanchonete.fastfood_app.repository.PedidoRepository;
+import com.lanchonete.fastfood_app.dto.ItemPedidoDTO;
+import com.lanchonete.fastfood_app.dto.PedidoRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

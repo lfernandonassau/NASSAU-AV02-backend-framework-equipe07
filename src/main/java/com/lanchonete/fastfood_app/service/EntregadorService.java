@@ -2,10 +2,13 @@ package com.lanchonete.fastfood_app.service;
 
 import com.lanchonete.fastfood_app.model.Entregador;
 import com.lanchonete.fastfood_app.repository.EntregadorRepository;
+import com.lanchonete.fastfood_app.dto.EntregadorRequestDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class EntregadorService {
