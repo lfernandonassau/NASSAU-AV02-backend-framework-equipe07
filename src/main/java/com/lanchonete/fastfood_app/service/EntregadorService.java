@@ -23,4 +23,13 @@ public class EntregadorService {
     public Entregador salvarEntregador(Entregador entregador){
         return repository.save(entregador);
     }
+
+    public List<Entregador> listarDisponiveis() {
+        return repository.findAll();
+    }
+
+    public Entregador atualizarEntregador(UUID id, EntregadorRequestDTO dto) {
+        return repository.findById(id).orElse(null);
+    }
+
 }
