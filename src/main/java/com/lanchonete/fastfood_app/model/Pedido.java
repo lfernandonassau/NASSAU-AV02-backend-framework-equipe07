@@ -1,10 +1,9 @@
 package com.lanchonete.fastfood_app.model;
 
 import com.lanchonete.fastfood_app.model.enums.StatusPedido;
-import com.lanchonete.fastfood_app.model.Usuario;
-import com.lanchonete.fastfood_app.model.Entregador;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,7 +15,7 @@ public class Pedido {
     private UUID id;
 
     @Column(nullable = false)
-    private LocalDateTime data;
+    private LocalDateTime dataCriacao;
 
     @Column(nullable = false)
     private Double valorTotal;
@@ -26,26 +25,31 @@ public class Pedido {
     private StatusPedido status;
 
     @Column(nullable = false)
-    private Double taxaEntrega;
+    private Double taxaEntrega = 9.99;
 
-    //Relacionamento
+    // 🧍‍♂️ Muitos pedidos → 1 usuário
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
+    // 🚚 Muitos pedidos → 1 entregador (opcional)
     @ManyToOne
     @JoinColumn(name = "entregador_id")
     private Entregador entregador;
 
-    public Pedido() {
-    }
+    // 🍔 1 pedido → vários itens
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemPedido> itens;
+
+    public Pedido() {}
 
     @PrePersist
     public void prePersist() {
-        if (data == null) setData(LocalDateTime.now());
+        if (dataCriacao == null) setData(LocalDateTime.now());
         if (status == null) setStatus(StatusPedido.PENDENTE);
     }
 
+    // Getters e setters
 
     public UUID getId() {
         return id;
@@ -55,15 +59,13 @@ public class Pedido {
         this.id = id;
     }
 
-
-    public LocalDateTime getData() {
-        return data;
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
     }
 
     public void setData(LocalDateTime data) {
-        this.data = data;
+        this.dataCriacao = data;
     }
-
 
     public Double getValorTotal() {
         return valorTotal;
@@ -73,7 +75,6 @@ public class Pedido {
         this.valorTotal = valorTotal;
     }
 
-
     public StatusPedido getStatus() {
         return status;
     }
@@ -81,7 +82,6 @@ public class Pedido {
     public void setStatus(StatusPedido status) {
         this.status = status;
     }
-
 
     public Double getTaxaEntrega() {
         return taxaEntrega;
@@ -91,7 +91,6 @@ public class Pedido {
         this.taxaEntrega = taxaEntrega;
     }
 
-
     public Usuario getUsuario() {
         return usuario;
     }
@@ -100,12 +99,19 @@ public class Pedido {
         this.usuario = usuario;
     }
 
-
     public Entregador getEntregador() {
         return entregador;
     }
 
     public void setEntregador(Entregador entregador) {
         this.entregador = entregador;
+    }
+
+    public List<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItemPedido> itens) {
+        this.itens = itens;
     }
 }

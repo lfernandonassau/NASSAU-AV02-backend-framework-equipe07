@@ -20,7 +20,7 @@ public class EntregadorService {
         return (List<Entregador>) repository.findAll();
     }
 
-    public Entregador salvarEntregador(Entregador entregador){
+    public Entregador cadastrarEntregador(Entregador entregador){
         return repository.save(entregador);
     }
 
@@ -28,7 +28,7 @@ public class EntregadorService {
         return repository.findAll();
     }
 
-    public Entregador atualizarEntregador(UUID id, EntregadorRequestDTO dto) {
+    public Entregador atualizarEntregador(UUID id, Entregador entregador) {
         return repository.findById(id).orElse(null);
     }
 

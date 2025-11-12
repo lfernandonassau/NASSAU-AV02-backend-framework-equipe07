@@ -3,12 +3,10 @@ package com.lanchonete.fastfood_app.model;
 import jakarta.persistence.*;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
 @Table(name = "produtos")
-
 public class Produto {
 
     @Setter
@@ -25,9 +23,12 @@ public class Produto {
     @Column(nullable = false)
     private Double preco;
 
+    @Column(nullable = true)
+    private String imagemUrl;
 
-    public Produto() {
-    }
+    public Produto() {}
+
+    // Getters e Setters
 
     public UUID getId() {
         return id;
@@ -41,7 +42,6 @@ public class Produto {
         this.nome = nome;
     }
 
-
     public String getDescricao() {
         return descricao;
     }
@@ -50,12 +50,19 @@ public class Produto {
         this.descricao = descricao;
     }
 
-
     public Double getPreco() {
         return preco;
     }
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public String getImagemUrl() {
+        return imagemUrl;
+    }
+
+    public void setImagemUrl(String imagemUrl) {
+        this.imagemUrl = imagemUrl;
     }
 }

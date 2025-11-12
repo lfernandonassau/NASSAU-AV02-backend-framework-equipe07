@@ -36,7 +36,7 @@ public class UsuarioService {
         return repository.findById(id).orElse(null);
     }
 
-    public Usuario salvarUsuario(Usuario usuario) {
+    public Usuario cadastrarUsuario(Usuario usuario) {
         return repository.save(usuario);
     }
 }

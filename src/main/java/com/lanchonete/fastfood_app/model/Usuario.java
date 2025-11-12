@@ -2,6 +2,8 @@ package com.lanchonete.fastfood_app.model;
 
 import com.lanchonete.fastfood_app.model.enums.TipoUsuario;
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Value;
+
 import java.util.UUID;
 
 @Entity
@@ -24,7 +26,7 @@ public class Usuario {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private TipoUsuario tipo;
+    private TipoUsuario tipo = TipoUsuario.CLIENTE;
 
     private String endereco;
 

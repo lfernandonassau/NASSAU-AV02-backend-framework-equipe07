@@ -1,18 +1,39 @@
 package com.lanchonete.fastfood_app.dto;
 
+import com.lanchonete.fastfood_app.model.Pedido;
+import com.lanchonete.fastfood_app.model.enums.StatusPedido;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PedidoResponseDTO {
-    private Long id;
-    private LocalDateTime data;
+
+    private String id;
+    private String usuarioId;
     private Double valorTotal;
-    private String status;
-    private Double taxaEntrega;
-    private UsuarioResponseDTO cliente;
-    private EntregadorResponseDTO entregador;
-    private List<ItemPedidoDTO> itens;
-    private NotaFiscalPublicDTO notaFiscal;
+    private StatusPedido status;
+    private LocalDateTime dataCriacao;
+    private List<ItemPedidoResponseDTO> itens;
+
+    public PedidoResponseDTO(Pedido pedido) {
+        this.id = pedido.getId().toString();
+        this.usuarioId = pedido.getUsuario().getId().toString();
+        this.valorTotal = pedido.getValorTotal();
+        this.status = pedido.getStatus();
+        this.dataCriacao = pedido.getDataCriacao();
+
+        if (pedido.getItens() != null) {
+            this.itens = pedido.getItens()
+                    .stream()
+                    .map(ItemPedidoResponseDTO::new)
+                    .collect(Collectors.toList());
+        }
+    }
 }
