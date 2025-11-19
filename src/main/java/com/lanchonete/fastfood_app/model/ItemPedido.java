@@ -11,21 +11,21 @@ public class ItemPedido {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    //Relacionamento
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pedido_id", nullable = false)
     private Pedido pedido;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "produto_id", nullable = false)
     private Produto produto;
 
 
     @Column(nullable = false)
-    private int quantidade;
+    private Integer quantidade;
 
     @Column(nullable = false)
-    private double precoUnitario;
+    private Double precoUnitario;
 
     public ItemPedido() {
     }

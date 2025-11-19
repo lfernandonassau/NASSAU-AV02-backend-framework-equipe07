@@ -2,7 +2,6 @@ package com.lanchonete.fastfood_app.model;
 
 import com.lanchonete.fastfood_app.model.enums.TipoUsuario;
 import jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.UUID;
 

@@ -18,6 +18,9 @@ public class Pedido {
     private LocalDateTime dataCriacao;
 
     @Column(nullable = false)
+    private Double valorProdutos;
+
+    @Column(nullable = false)
     private Double valorTotal;
 
     @Enumerated(EnumType.STRING)
@@ -25,31 +28,26 @@ public class Pedido {
     private StatusPedido status;
 
     @Column(nullable = false)
-    private Double taxaEntrega = 9.99;
+    private Double taxaEntrega;
 
-    // 🧍‍♂️ Muitos pedidos → 1 usuário
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    // 🚚 Muitos pedidos → 1 entregador (opcional)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "entregador_id")
     private Entregador entregador;
 
-    // 🍔 1 pedido → vários itens
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ItemPedido> itens;
 
     public Pedido() {}
 
     @PrePersist
     public void prePersist() {
-        if (dataCriacao == null) setData(LocalDateTime.now());
+        if (dataCriacao == null) setDataCriacao(LocalDateTime.now());
         if (status == null) setStatus(StatusPedido.PENDENTE);
     }
-
-    // Getters e setters
 
     public UUID getId() {
         return id;
@@ -63,8 +61,16 @@ public class Pedido {
         return dataCriacao;
     }
 
-    public void setData(LocalDateTime data) {
-        this.dataCriacao = data;
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public Double getValorProdutos() {
+        return valorProdutos;
+    }
+
+    public void setValorProdutos(Double valorProdutos) {
+        this.valorProdutos = valorProdutos;
     }
 
     public Double getValorTotal() {

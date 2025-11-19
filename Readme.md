@@ -1,4 +1,4 @@
-# 🍔 Aplicativo de Lanchonete
+[# 🍔 Aplicativo de Lanchonete
 
 > Projeto completo de sistema de pedidos de lanchonete com **Java 21 (Spring Boot)** no backend e **React** no frontend web.  
 > O aplicativo mobile ainda não está incluído nesta etapa.  
@@ -81,7 +81,7 @@ src/
 3. O sistema calcula o valor total, cria o `Pedido` e salva os `ItemPedido`.
 4. Administrador atualiza o status para “Em preparo” / “Pronto para entrega”.
 5. Entregador é atribuído e atualiza status para “Saiu para entrega” e “Entregue”.
-6. Sistema gera a `NotaFiscal` após a conclusão.
+6. Sistema gera automaticamente a `NotaFiscal`.
 
 ---
 
@@ -89,39 +89,39 @@ src/
 
 ### Autenticação / Usuário
 ```http
-POST /api/usuarios ✅
-POST /api/login
+POST /usuarios ✅
+POST /login
 # Retorna token JWT
 ```
 
 ### Produtos
 ```http
-GET /api/produtos ✅
-GET /api/produtos/{id} ✅
-POST /api/produtos ✅         # ADMIN
-PUT  /api/produtos/{id} ✅    # ADMIN
-DELETE /api/produtos/{id} ✅  # ADMIN
+GET /produtos ✅
+GET /produtos/{id} ✅
+POST /produtos ✅         # ADMIN
+PUT  /produtos/{id} ✅    # ADMIN
+DELETE /produtos/{id} ✅  # ADMIN
 ```
 
 ### Pedidos
 ```http
-POST /api/pedidos ✅
-GET /api/pedidos ✅
-PUT /api/pedidos/{id}/status?novoStatus=Em%20preparo
-PUT /api/pedidos/{id}/entregador/{entregadorId}
-PUT /api/pedidos/{id}/entregar
+POST /pedidos ✅
+GET /pedidos ✅
+GET /pedidos/{id} ✅
+PUT /pedidos/{id}/status?novoStatus=Em%20preparo ✅
 ```
 
-### Entregadores
+### Entregador
 ```http
-GET /api/entregadores/disponiveis ✅
-POST /api/entregadores ✅   # ADMIN
-PUT  /api/entregadores/{id}
+GET /entregadores ✅
+GET /entregadores/disponiveis ✅
+POST /entregadores ✅   # ADMIN
+PUT  /entregadores/{id} ✅
 ```
 
 ### Nota Fiscal
 ```http
-GET /api/notafiscal/{pedidoId}
+GET /notafiscal/{pedidoId} ✅
 ```
 
 ---
@@ -168,4 +168,4 @@ API disponível em: `http://localhost:8080`
 - **João Victor**
 - **Paulo Roberto** 
 
----
+---]()

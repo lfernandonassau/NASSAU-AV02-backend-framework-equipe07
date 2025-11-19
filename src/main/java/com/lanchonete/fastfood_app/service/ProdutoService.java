@@ -1,5 +1,7 @@
 package com.lanchonete.fastfood_app.service;
 
+import com.lanchonete.fastfood_app.dto.ProdutoRequestDTO;
+import com.lanchonete.fastfood_app.dto.ProdutoResponseDTO;
 import com.lanchonete.fastfood_app.model.Produto;
 import com.lanchonete.fastfood_app.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ProdutoService {
@@ -14,40 +17,48 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository repository;
 
-    public List<Produto> listarProdutos() {
-        return (List<Produto>) repository.findAll();
-
+    public List<ProdutoResponseDTO> listarProdutos() {
+        return repository.findAll()
+                .stream()
+                .map(ProdutoResponseDTO::new) // Construtor que recebe Produto
+                .collect(Collectors.toList());
     }
 
-    public Produto buscarPorId(UUID id){
-
-        return repository.findById(id).orElse(null);
+    public ProdutoResponseDTO buscarPorId(UUID id) {
+        return repository.findById(id)
+                .map(ProdutoResponseDTO::new)
+                .orElse(null);
     }
 
-    public Produto cadastrarProduto(Produto produto) {
+    public ProdutoResponseDTO cadastrarProduto(ProdutoRequestDTO dto) {
+        Produto novoProduto = new Produto();
+        novoProduto.setNome(dto.getNome());
+        novoProduto.setDescricao(dto.getDescricao());
+        novoProduto.setPreco(dto.getPreco());
+        novoProduto.setImagemUrl(dto.getImagemUrl()); // se o DTO tiver esse campo
 
-        return repository.save(produto);
+        Produto salvo = repository.save(novoProduto);
+        return new ProdutoResponseDTO(salvo);
     }
 
-    public Produto atualizarProduto(UUID id, Produto produtoAtualizado) {
-        Produto produtoExistente =  repository.findById(id).orElse(null);
+    public ProdutoResponseDTO atualizarProduto(UUID id, ProdutoRequestDTO dto) {
+        Produto produtoExistente = repository.findById(id).orElse(null);
+        if (produtoExistente == null) {
+            return null;
+        }
 
         // Atualiza apenas os campos não nulos
-        if (produtoAtualizado.getNome() != null) {
-            produtoExistente.setNome(produtoAtualizado.getNome());
-        }
-        if (produtoAtualizado.getDescricao() != null) {
-            produtoExistente.setDescricao(produtoAtualizado.getDescricao());
-        }
-        if (produtoAtualizado.getPreco() != null) {
-            produtoExistente.setPreco(produtoAtualizado.getPreco());
-        }
+        if (dto.getNome() != null) produtoExistente.setNome(dto.getNome());
+        if (dto.getDescricao() != null) produtoExistente.setDescricao(dto.getDescricao());
+        if (dto.getPreco() != null) produtoExistente.setPreco(dto.getPreco());
+        if (dto.getImagemUrl() != null) produtoExistente.setImagemUrl(dto.getImagemUrl());
 
-        return repository.save(produtoExistente);
-
+        Produto atualizado = repository.save(produtoExistente);
+        return new ProdutoResponseDTO(atualizado);
     }
 
     public void excluirProduto(UUID id) {
         repository.deleteById(id);
     }
+
 }

@@ -1,5 +1,7 @@
 package com.lanchonete.fastfood_app.controller;
 
+import com.lanchonete.fastfood_app.dto.PedidoRequestDTO;
+import com.lanchonete.fastfood_app.dto.PedidoResponseDTO;
 import com.lanchonete.fastfood_app.model.Pedido;
 import com.lanchonete.fastfood_app.model.enums.StatusPedido;
 import com.lanchonete.fastfood_app.service.PedidoService;
@@ -17,22 +19,22 @@ public class PedidoController {
     private PedidoService service;
 
     @PostMapping
-    public Pedido cadastrarPedido(@RequestBody Pedido pedido) {
-        return service.cadastrarPedido(pedido);
+    public PedidoResponseDTO criarPedido(@RequestBody PedidoRequestDTO pedido) {
+        return service.criarPedido(pedido);
     }
 
     @GetMapping
-    public List<Pedido> listarPedidos() {
+    public List<PedidoResponseDTO> listarPedidos() {
         return service.listarPedidos();
     }
 
     @GetMapping("/{id}")
-    public Pedido buscarPorId(@PathVariable UUID id) {
+    public PedidoResponseDTO buscarPorId(@PathVariable UUID id) {
         return service.buscarPorId(id);
     }
 
     @PutMapping("/{id}/status")
-    public Pedido atualizarStatus(@PathVariable UUID id, @RequestParam StatusPedido novoStatus) {
+    public PedidoResponseDTO atualizarStatus(@PathVariable UUID id, @RequestParam StatusPedido novoStatus) {
         return service.atualizarStatus(id, novoStatus);
     }
 }

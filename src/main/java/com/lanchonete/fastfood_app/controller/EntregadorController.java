@@ -1,5 +1,7 @@
 package com.lanchonete.fastfood_app.controller;
 
+import com.lanchonete.fastfood_app.dto.EntregadorRequestDTO;
+import com.lanchonete.fastfood_app.dto.EntregadorResponseDTO;
 import com.lanchonete.fastfood_app.model.Entregador;
 import com.lanchonete.fastfood_app.service.EntregadorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,22 +18,22 @@ public class EntregadorController {
     private EntregadorService service;
 
     @PostMapping
-    public Entregador cadastrarEntregador(@RequestBody Entregador entregador) {
+    public EntregadorResponseDTO cadastrarEntregador(@RequestBody EntregadorRequestDTO entregador) {
         return service.cadastrarEntregador(entregador);
     }
 
     @PutMapping("/{id}")
-    public Entregador atualizarEntregador(@PathVariable UUID id, @RequestBody Entregador entregador) {
+    public EntregadorResponseDTO atualizarEntregador(@PathVariable UUID id, @RequestBody EntregadorRequestDTO entregador) {
         return service.atualizarEntregador(id, entregador);
     }
 
     @GetMapping
-    public List<Entregador> listarTodos() {
+    public List<EntregadorResponseDTO> listarTodos() {
         return service.listarEntregadores();
     }
 
     @GetMapping("/disponiveis")
-    public List<Entregador> listarDisponiveis() {
+    public List<EntregadorResponseDTO> listarDisponiveis() {
         return service.listarDisponiveis();
     }
 }

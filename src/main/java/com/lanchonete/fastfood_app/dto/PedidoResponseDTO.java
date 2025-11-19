@@ -17,7 +17,9 @@ public class PedidoResponseDTO {
 
     private String id;
     private String usuarioId;
+    private Double valorProdutos;
     private Double valorTotal;
+    private Double taxaEntrega;
     private StatusPedido status;
     private LocalDateTime dataCriacao;
     private List<ItemPedidoResponseDTO> itens;
@@ -25,7 +27,11 @@ public class PedidoResponseDTO {
     public PedidoResponseDTO(Pedido pedido) {
         this.id = pedido.getId().toString();
         this.usuarioId = pedido.getUsuario().getId().toString();
+
+        this.valorProdutos = pedido.getValorProdutos();
         this.valorTotal = pedido.getValorTotal();
+        this.taxaEntrega = pedido.getTaxaEntrega();
+
         this.status = pedido.getStatus();
         this.dataCriacao = pedido.getDataCriacao();
 

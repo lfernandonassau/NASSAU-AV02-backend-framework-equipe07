@@ -12,32 +12,32 @@ public class NotaFiscal {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false, unique = true)
-    private String numero;
-
     @Column(nullable = false)
     private LocalDateTime dataEmissao;
 
     @Column(nullable = false)
-    private Double valorTotal;
+    private Double valorProdutos;
 
     @Column(nullable = false)
-    private Double impostos;
+    private Double taxaEntrega;
 
-    //Relacionameto
+    @Column(nullable = false)
+    private Double valorTotal;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pedido_id", nullable = false, unique = true)
     private Pedido pedido;
 
-    public NotaFiscal() {
-    }
+    public NotaFiscal() {}
 
     @PrePersist
     public void prePersist() {
         if (dataEmissao == null) {
-            setDataEmissao(LocalDateTime.now());
+            this.dataEmissao = LocalDateTime.now();
         }
     }
+
+    // Getters e Setters
 
     public UUID getId() {
         return id;
@@ -47,16 +47,6 @@ public class NotaFiscal {
         this.id = id;
     }
 
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-
     public LocalDateTime getDataEmissao() {
         return dataEmissao;
     }
@@ -65,6 +55,21 @@ public class NotaFiscal {
         this.dataEmissao = dataEmissao;
     }
 
+    public Double getValorProdutos() {
+        return valorProdutos;
+    }
+
+    public void setValorProdutos(Double valorProdutos) {
+        this.valorProdutos = valorProdutos;
+    }
+
+    public Double getTaxaEntrega() {
+        return taxaEntrega;
+    }
+
+    public void setTaxaEntrega(Double taxaEntrega) {
+        this.taxaEntrega = taxaEntrega;
+    }
 
     public Double getValorTotal() {
         return valorTotal;
@@ -73,16 +78,6 @@ public class NotaFiscal {
     public void setValorTotal(Double valorTotal) {
         this.valorTotal = valorTotal;
     }
-
-
-    public Double getImpostos() {
-        return impostos;
-    }
-
-    public void setImpostos(Double impostos) {
-        this.impostos = impostos;
-    }
-
 
     public Pedido getPedido() {
         return pedido;

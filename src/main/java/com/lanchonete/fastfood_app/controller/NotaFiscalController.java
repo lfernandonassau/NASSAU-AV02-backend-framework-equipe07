@@ -1,6 +1,6 @@
 package com.lanchonete.fastfood_app.controller;
 
-import com.lanchonete.fastfood_app.model.NotaFiscal;
+import com.lanchonete.fastfood_app.dto.NotaFiscalPublicDTO;
 import com.lanchonete.fastfood_app.service.NotaFiscalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ public class NotaFiscalController {
     private NotaFiscalService service;
 
     @GetMapping("/{pedidoId}")
-    public NotaFiscal buscarNotaPorPedidoId(@PathVariable UUID pedidoId) {
-        return service.buscarPorPedidoId(pedidoId);
+    public NotaFiscalPublicDTO buscarNotaFiscalPorPedidoId(@PathVariable UUID pedidoId) {
+        return service.buscarNotaFiscalPorPedidoId(pedidoId);
     }
 }

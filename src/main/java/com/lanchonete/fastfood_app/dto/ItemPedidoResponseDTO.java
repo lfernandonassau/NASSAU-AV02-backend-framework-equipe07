@@ -12,15 +12,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ItemPedidoResponseDTO {
 
-    private Pedido pedido;
-    private Produto produto;
-    private int quantidade;
+    private String produtoId;
+    private String nomeProduto;
+    private Integer quantidade;
     private double precoUnitario;
+    private double subTotal;
 
-    public ItemPedidoResponseDTO(ItemPedido itemPedido) {
-        this.pedido = getPedido();
-        this.produto = getProduto();
-        this.quantidade = getQuantidade();
-        this.precoUnitario = getPrecoUnitario();
+    public ItemPedidoResponseDTO(ItemPedido item) {
+        this.produtoId = item.getProduto().getId().toString();
+        this.nomeProduto = item.getProduto().getNome();
+        this.quantidade = item.getQuantidade();
+        this.precoUnitario = item.getPrecoUnitario();
+        this.subTotal = item.getPrecoUnitario() * item.getQuantidade();
     }
 }
