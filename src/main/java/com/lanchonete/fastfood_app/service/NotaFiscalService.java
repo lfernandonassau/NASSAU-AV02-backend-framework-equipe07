@@ -24,16 +24,17 @@ public class NotaFiscalService {
 
     public NotaFiscal gerarNotaFiscal(Pedido pedido) {
 
-        NotaFiscal nota = new NotaFiscal();
+        if (notaFiscalRepository.findByPedidoId(pedido.getId()).isPresent()) {
+            throw new RuntimeException("Este pedido já possui nota fiscal gerada.");
+        }
 
+        NotaFiscal nota = new NotaFiscal();
         nota.setPedido(pedido);
         nota.setDataEmissao(LocalDateTime.now());
         nota.setValorProdutos(pedido.getValorProdutos());
         nota.setTaxaEntrega(pedido.getTaxaEntrega());
-        nota.setValorTotal(pedido.getValorProdutos() + pedido.getTaxaEntrega());
+        nota.setValorTotal(pedido.getValorTotal());
 
         return notaFiscalRepository.save(nota);
     }
-
-
 }

@@ -11,9 +11,6 @@ public class Entregador {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
-    private String nome;
-
     @Column(nullable = false, unique = true)
     private String telefone;
 
@@ -26,9 +23,11 @@ public class Entregador {
     @Column(nullable = false)
     private boolean disponibilidade = true;
 
-    public Entregador() {
-    }
+    @OneToOne
+    @JoinColumn(name = "usuario_id", nullable = false, unique = true)
+    private Usuario usuario;
 
+    public Entregador() {}
 
     public UUID getId() {
         return id;
@@ -38,16 +37,6 @@ public class Entregador {
         this.id = id;
     }
 
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-
     public String getTelefone() {
         return telefone;
     }
@@ -55,7 +44,6 @@ public class Entregador {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-
 
     public String getVeiculo() {
         return veiculo;
@@ -65,7 +53,6 @@ public class Entregador {
         this.veiculo = veiculo;
     }
 
-
     public String getPlaca() {
         return placa;
     }
@@ -74,12 +61,19 @@ public class Entregador {
         this.placa = placa;
     }
 
-
     public boolean isDisponibilidade() {
         return disponibilidade;
     }
 
     public void setDisponibilidade(boolean disponibilidade) {
         this.disponibilidade = disponibilidade;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

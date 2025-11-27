@@ -11,18 +11,21 @@ import lombok.NoArgsConstructor;
 public class EntregadorResponseDTO {
 
     private String id;
-    private String nome;
+    private String usuarioId;
+    private String usuarioNome;
     private String telefone;
     private String veiculo;
     private String placa;
     private boolean disponibilidade;
 
-    public EntregadorResponseDTO(Entregador entregador) {
-        this.id = entregador.getId().toString();
-        this.nome = entregador.getNome();
-        this.telefone = entregador.getTelefone();
-        this.veiculo = entregador.getVeiculo();
-        this.placa = entregador.getPlaca();
-        this.disponibilidade = entregador.isDisponibilidade();
+    // Construtor customizado a partir da entidade
+    public EntregadorResponseDTO(Entregador e) {
+        this.id = e.getId().toString();
+        this.usuarioId = e.getUsuario() != null ? e.getUsuario().getId().toString() : null;
+        this.usuarioNome = e.getUsuario() != null ? e.getUsuario().getNome() : null;
+        this.telefone = e.getTelefone();
+        this.veiculo = e.getVeiculo();
+        this.placa = e.getPlaca();
+        this.disponibilidade = e.isDisponibilidade();
     }
 }

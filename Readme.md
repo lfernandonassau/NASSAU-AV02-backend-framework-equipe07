@@ -90,7 +90,7 @@ src/
 ### Autenticação / Usuário
 ```http
 POST /usuarios ✅
-POST /login
+POST /login ✅
 # Retorna token JWT
 ```
 

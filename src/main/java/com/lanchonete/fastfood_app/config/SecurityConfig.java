@@ -24,28 +24,24 @@ public class SecurityConfig {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    // ALGORTIMO DE CRIPTOGRAFIA (BCrypt)
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // INFORMA AO SPRING COMO AUTENTICAR USUÁRIOS
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(customUserDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(customUserDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
     }
 
-    // GERENCIA O LOGIN (UTILIZADO NO AUTHCONTROLLER)
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
-    // CONFIGURA A SEGURANÇA DA APLICAÇÃO
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -56,20 +52,20 @@ public class SecurityConfig {
         );
 
         http.authorizeHttpRequests(auth -> auth
-                // ROTAS LIBERADAS
-                .requestMatchers("/auth/login", "/usuario").permitAll()
+                .requestMatchers("/auth/login").permitAll()
+                .requestMatchers("/usuario").permitAll()
+                .requestMatchers("/produtos", "/produtos/**").permitAll()
 
-                // ROTAS PARA ADMIN (opcional)
-                //.requestMatchers("/produto/**").hasRole("ADMIN")
+                .requestMatchers("/entregadores/**").hasRole("ADMIN")
+                .requestMatchers("/produtos/**").hasRole("ADMIN")
 
-                // TODAS AS OUTRAS PRECISAM DE TOKEN
+                .requestMatchers("/pedidos/**").hasAnyRole("ADMIN", "ENTREGADOR", "CLIENTE")
+
                 .anyRequest().authenticated()
         );
 
-        // ADICIONA O FILTRO JWT ANTES DO FILTRO PADRÃO DO SPRING
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
-        // Provider de autenticação
         http.authenticationProvider(authenticationProvider());
 
         return http.build();
