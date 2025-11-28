@@ -27,17 +27,13 @@ public class PedidoResponseDTO {
     public PedidoResponseDTO(Pedido pedido) {
         this.id = pedido.getId().toString();
         this.usuarioId = pedido.getUsuario().getId().toString();
-
         this.valorProdutos = pedido.getValorProdutos();
         this.valorTotal = pedido.getValorTotal();
         this.taxaEntrega = pedido.getTaxaEntrega();
-
         this.status = pedido.getStatus();
         this.dataCriacao = pedido.getDataCriacao();
-
         if (pedido.getItens() != null) {
-            this.itens = pedido.getItens()
-                    .stream()
+            this.itens = pedido.getItens().stream()
                     .map(ItemPedidoResponseDTO::new)
                     .collect(Collectors.toList());
         }

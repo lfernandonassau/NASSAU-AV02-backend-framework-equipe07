@@ -12,78 +12,32 @@ public class NotaFiscal {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
     private LocalDateTime dataEmissao;
-
-    @Column(nullable = false)
     private Double valorProdutos;
-
-    @Column(nullable = false)
     private Double taxaEntrega;
-
-    @Column(nullable = false)
     private Double valorTotal;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pedido_id", nullable = false, unique = true)
+    @JoinColumn(name = "pedido_id", unique = true)
     private Pedido pedido;
 
     public NotaFiscal() {}
 
     @PrePersist
     public void prePersist() {
-        if (dataEmissao == null) {
-            this.dataEmissao = LocalDateTime.now();
-        }
+        if (dataEmissao == null) dataEmissao = LocalDateTime.now();
     }
 
-    // Getters e Setters
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getDataEmissao() {
-        return dataEmissao;
-    }
-
-    public void setDataEmissao(LocalDateTime dataEmissao) {
-        this.dataEmissao = dataEmissao;
-    }
-
-    public Double getValorProdutos() {
-        return valorProdutos;
-    }
-
-    public void setValorProdutos(Double valorProdutos) {
-        this.valorProdutos = valorProdutos;
-    }
-
-    public Double getTaxaEntrega() {
-        return taxaEntrega;
-    }
-
-    public void setTaxaEntrega(Double taxaEntrega) {
-        this.taxaEntrega = taxaEntrega;
-    }
-
-    public Double getValorTotal() {
-        return valorTotal;
-    }
-
-    public void setValorTotal(Double valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
-    public Pedido getPedido() {
-        return pedido;
-    }
-
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
-    }
+    public UUID getId() { return id; }
+    public void setId(UUID id) { this.id = id; }
+    public LocalDateTime getDataEmissao() { return dataEmissao; }
+    public void setDataEmissao(LocalDateTime dataEmissao) { this.dataEmissao = dataEmissao; }
+    public Double getValorProdutos() { return valorProdutos; }
+    public void setValorProdutos(Double valorProdutos) { this.valorProdutos = valorProdutos; }
+    public Double getTaxaEntrega() { return taxaEntrega; }
+    public void setTaxaEntrega(Double taxaEntrega) { this.taxaEntrega = taxaEntrega; }
+    public Double getValorTotal() { return valorTotal; }
+    public void setValorTotal(Double valorTotal) { this.valorTotal = valorTotal; }
+    public Pedido getPedido() { return pedido; }
+    public void setPedido(Pedido pedido) { this.pedido = pedido; }
 }

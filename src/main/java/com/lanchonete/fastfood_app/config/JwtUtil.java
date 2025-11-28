@@ -5,6 +5,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 
 @Component
@@ -12,22 +13,25 @@ public class JwtUtil {
 
     private static final long EXPIRATION_MS = 1000 * 60 * 60 * 24; // 24h
 
-    // Chave secreta para assinatura (forte e segura)
-    private final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    // 🔐 ATENÇÃO: chave fixa (não pode trocar a cada reinicialização)
+    private static final String SECRET =
+            "3D1A7F9C8B2E4C61397A1F2D4B6C8E0F3A7C9B1D2E4F6A8C0B2D4E6F8A1C3E5";
 
-    // GERAR TOKEN JWT ---------------------------------------------------------
+    private final Key secretKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(
+            Base64.getEncoder().encodeToString(SECRET.getBytes())
+    ));
+
     public String gerarToken(String usuarioId, String email, String role) {
         return Jwts.builder()
-                .setSubject(usuarioId)           // ID do usuário
-                .claim("email", email)           // adicional
-                .claim("role", role)             // papel (CLIENTE, ADMIN, etc)
-                .setIssuedAt(new Date())         // data emissão
+                .setSubject(usuarioId)
+                .claim("email", email)
+                .claim("role", role)
+                .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_MS))
-                .signWith(secretKey)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    // VALIDAR TOKEN -----------------------------------------------------------
     public boolean validarToken(String token) {
         try {
             Jwts.parserBuilder()
@@ -41,7 +45,6 @@ public class JwtUtil {
         }
     }
 
-    // PEGAR CLAIMS ------------------------------------------------------------
     public Claims getClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(secretKey)
@@ -50,17 +53,14 @@ public class JwtUtil {
                 .getBody();
     }
 
-    // PEGAR ID DO USUÁRIO -----------------------------------------------------
     public String getUsuarioId(String token) {
         return getClaims(token).getSubject();
     }
 
-    // PEGAR EMAIL -------------------------------------------------------------
     public String getEmailFromToken(String token) {
         return getClaims(token).get("email", String.class);
     }
 
-    // PEGAR ROLE --------------------------------------------------------------
     public String getRole(String token) {
         return getClaims(token).get("role", String.class);
     }

@@ -20,19 +20,17 @@ public class UsuarioService {
     private UsuarioRepository repository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder encoder;
 
     public List<UsuarioResponseDTO> listarUsuarios() {
         return repository.findAll()
-                .stream()
-                .map(UsuarioResponseDTO::new)
+                .stream().map(UsuarioResponseDTO::new)
                 .collect(Collectors.toList());
     }
 
     public UsuarioResponseDTO buscarPorId(UUID id) {
-        Usuario usuario = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        return new UsuarioResponseDTO(usuario);
+        Usuario u = repository.findById(id).orElseThrow();
+        return new UsuarioResponseDTO(u);
     }
 
     public UsuarioResponseDTO cadastrarUsuario(UsuarioRequestDTO dto) {
@@ -46,14 +44,8 @@ public class UsuarioService {
         usuario.setEmail(dto.getEmail());
         usuario.setTelefone(dto.getTelefone());
         usuario.setEndereco(dto.getEndereco());
-
-        // 🔐 Criptografar senha
-        usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
-
-        // 🔰 Definir role padrão
+        usuario.setSenha(encoder.encode(dto.getSenha()));
         usuario.setTipo(TipoUsuario.CLIENTE);
-
-        Usuario salvo = repository.save(usuario);
-        return new UsuarioResponseDTO(salvo);
+        return new UsuarioResponseDTO(repository.save(usuario));
     }
 }

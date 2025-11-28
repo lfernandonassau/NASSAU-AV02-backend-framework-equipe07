@@ -5,6 +5,7 @@ import com.lanchonete.fastfood_app.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -53,13 +54,21 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/login").permitAll()
-                .requestMatchers("/usuario").permitAll()
-                .requestMatchers("/produtos", "/produtos/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/usuario").permitAll()
+                .requestMatchers(HttpMethod.GET, "/produtos").permitAll()
+                .requestMatchers(HttpMethod.GET, "/produtos/**").permitAll()
 
+                .requestMatchers(HttpMethod.GET, "/usuario/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/produtos").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/produtos/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/produtos/**").hasRole("ADMIN")
                 .requestMatchers("/entregadores/**").hasRole("ADMIN")
-                .requestMatchers("/produtos/**").hasRole("ADMIN")
 
-                .requestMatchers("/pedidos/**").hasAnyRole("ADMIN", "ENTREGADOR", "CLIENTE")
+                .requestMatchers(HttpMethod.POST, "/pedidos").hasAnyRole("CLIENTE", "ADMIN")
+                .requestMatchers(HttpMethod.GET, "/pedidos").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/pedidos/**").hasAnyRole("CLIENTE", "ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/pedidos/**/status").hasAnyRole("ADMIN", "ENTREGADOR")
+                .requestMatchers(HttpMethod.GET, "/nota-fiscal/**").hasAnyRole("CLIENTE", "ADMIN")
 
                 .anyRequest().authenticated()
         );

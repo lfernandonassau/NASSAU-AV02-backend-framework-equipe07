@@ -18,7 +18,6 @@ public class EntregadorResponseDTO {
     private String placa;
     private boolean disponibilidade;
 
-    // Construtor customizado a partir da entidade
     public EntregadorResponseDTO(Entregador e) {
         this.id = e.getId().toString();
         this.usuarioId = e.getUsuario() != null ? e.getUsuario().getId().toString() : null;

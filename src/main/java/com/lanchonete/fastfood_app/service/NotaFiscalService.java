@@ -16,11 +16,31 @@ public class NotaFiscalService {
     @Autowired
     private NotaFiscalRepository notaFiscalRepository;
 
-    public NotaFiscalPublicDTO buscarNotaFiscalPorPedidoId(UUID pedidoId) {
+
+    public NotaFiscalPublicDTO buscarNotaFiscalPorPedidoId(UUID pedidoId, UUID usuarioIdLogado, String role) {
+
         NotaFiscal nota = notaFiscalRepository.findByPedidoId(pedidoId)
                 .orElseThrow(() -> new RuntimeException("Nota fiscal não encontrada"));
+
+        Pedido pedido = nota.getPedido();
+
+        if (!role.equals("ADMIN")) {
+
+            if (role.equals("CLIENTE")) {
+                if (!pedido.getUsuario().getId().equals(usuarioIdLogado)) {
+                    throw new RuntimeException("Você não tem permissão para ver esta nota fiscal.");
+                }
+            }
+
+            else {
+                throw new RuntimeException("Acesso negado.");
+            }
+        }
+
         return new NotaFiscalPublicDTO(nota);
     }
+
+
 
     public NotaFiscal gerarNotaFiscal(Pedido pedido) {
 

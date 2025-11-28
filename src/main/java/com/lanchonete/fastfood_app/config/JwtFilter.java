@@ -34,21 +34,29 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = null;
         String email = null;
 
-        // Verifica se existe header Authorization
+        // Captura o token corretamente
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            token = authHeader.substring(7); // remove "Bearer "
+            token = authHeader.substring(7);
+
+            // Agora o token carrega email, id e role
             email = jwtUtil.getEmailFromToken(token);
         }
 
-        // Se temos email e ainda não autenticamos
+        // Se email existe e ainda não há autenticação no contexto
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
+            // Carrega o usuário pelo email
             UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
 
+            // Valida token e aplica autenticação
             if (jwtUtil.validarToken(token)) {
+
+                // Cria o objeto de autenticação com as roles vindas do UserDetails
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(
-                                userDetails, null, userDetails.getAuthorities()
+                                userDetails,
+                                null,
+                                userDetails.getAuthorities() // ROLE_ADMIN, ROLE_CLIENTE etc
                         );
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);

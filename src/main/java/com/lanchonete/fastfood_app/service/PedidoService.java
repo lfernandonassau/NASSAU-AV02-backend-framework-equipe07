@@ -109,8 +109,7 @@ public class PedidoService {
         pedido.setValorProdutos(valorProdutos);
         pedido.setValorTotal(valorProdutos + pedido.getTaxaEntrega());
 
-        Pedido salvo = pedidoRepository.save(pedido);
-        return new PedidoResponseDTO(salvo);
+        return new PedidoResponseDTO(pedidoRepository.save(pedido));
     }
 
 

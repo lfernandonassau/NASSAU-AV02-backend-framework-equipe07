@@ -37,8 +37,7 @@ public class ProdutoService {
         novoProduto.setPreco(dto.getPreco());
         novoProduto.setImagemUrl(dto.getImagemUrl()); // se o DTO tiver esse campo
 
-        Produto salvo = repository.save(novoProduto);
-        return new ProdutoResponseDTO(salvo);
+        return new ProdutoResponseDTO(repository.save(novoProduto));
     }
 
     public ProdutoResponseDTO atualizarProduto(UUID id, ProdutoRequestDTO dto) {
@@ -47,14 +46,12 @@ public class ProdutoService {
             return null;
         }
 
-        // Atualiza apenas os campos não nulos
         if (dto.getNome() != null) produtoExistente.setNome(dto.getNome());
         if (dto.getDescricao() != null) produtoExistente.setDescricao(dto.getDescricao());
         if (dto.getPreco() != null) produtoExistente.setPreco(dto.getPreco());
         if (dto.getImagemUrl() != null) produtoExistente.setImagemUrl(dto.getImagemUrl());
 
-        Produto atualizado = repository.save(produtoExistente);
-        return new ProdutoResponseDTO(atualizado);
+        return new ProdutoResponseDTO(repository.save(produtoExistente));
     }
 
     public void excluirProduto(UUID id) {

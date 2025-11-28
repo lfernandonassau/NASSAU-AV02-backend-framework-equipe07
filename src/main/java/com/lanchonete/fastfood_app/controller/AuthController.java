@@ -29,16 +29,13 @@ public class AuthController {
     public LoginResponseDTO login(@RequestBody LoginRequestDTO dto) {
 
         try {
-            // Tenta autenticar o usuário
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getSenha())
             );
 
-            // Pega o usuário autenticado
             Usuario usuario = usuarioRepository.findByEmail(dto.getEmail())
                     .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-            // Gera o token JWT
             String token = jwtUtil.gerarToken(
                     usuario.getId().toString(),
                     usuario.getEmail(),
