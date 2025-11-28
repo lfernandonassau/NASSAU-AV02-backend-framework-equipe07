@@ -11,7 +11,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private static final long EXPIRATION_MS = 1000 * 60 * 60 * 24; // 24h
+    private static final long EXPIRATION_MS = 1000 * 60 * 2; // 2min
 
     // 🔐 ATENÇÃO: chave fixa (não pode trocar a cada reinicialização)
     private static final String SECRET =

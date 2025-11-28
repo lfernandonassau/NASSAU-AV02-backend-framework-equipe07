@@ -14,6 +14,7 @@
 - 🔗[Relacionamentos](#relacionamentos)
 - 📦[Fluxo de pedido resumido](#fluxo-de-pedido-resumido)
 - 📡[APIs principais (exemplos)](#apis-principais-exemplos)
+- 📌 [Exemplos de Requisições (JSON)](#📌-exemplos-de-requisições-json)
 - 💾[Configuração do banco (PostgreSQL)](#configuração-do-banco-postgresql)
 - ▶️[Como rodar](#como-rodar)
 - 🔒[Notas sobre autenticação (JWT)](#notas-sobre-autenticação-jwt)
@@ -42,7 +43,7 @@ O sistema tem como foco o aprendizado de **arquitetura em camadas**, **boas prá
 src/
  └─ main/
     ├─ java/
-    │  └─ com/seuprojeto/
+    │  └─ com/lanchonete/fastfoos_app
     │     ├─ controller/   # RestControllers
     │     ├─ service/      # Regras de negócio
     │     ├─ repository/   # Spring Data JPA Repositories
@@ -126,12 +127,75 @@ GET /notafiscal/{pedidoId} ✅
 
 ---
 
+
+## 📌 Exemplos de Requisições (JSON)
+
+### Cadastro de usuário
+```
+{
+  "nome": "Carlos Silva",
+  "email": "carlos@email.com",
+  "senha": "123456",
+  "tipo": "CLIENTE",
+  "endereco": "Rua A, 123",
+  "telefone": "99999-9999"
+}
+
+
+```
+
+### Login
+
+```
+{
+  "email": "carlos@email.com",
+  "senha": "123456"
+}
+
+```
+
+### Criar pedido
+
+```
+{
+  "produtos": [
+    { "produtoId": "uuid-produto-1", "quantidade": 2 },
+    { "produtoId": "uuid-produto-2", "quantidade": 1 }
+  ]
+}
+
+```
+
+### Criar produto (ADMIN)
+
+```
+{
+  "nome": "Hambúrguer Duplo",
+  "descricao": "Pão, 2 carnes, queijo e bacon",
+  "preco": 29.90,
+  "imagemUrl": "https://cdn.exemplo.com/burguer.png"
+}
+
+```
+
+### Atualizar status do pedido
+
+```
+{
+  "novoStatus": "EM_PREPARO"
+}
+
+```
+
+---
+
 ## 💾 Configuração do banco (PostgreSQL)
 Arquivo `application.properties`:
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/lanchonete_db
 spring.datasource.username=postgres
 spring.datasource.password=your_password
+
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
